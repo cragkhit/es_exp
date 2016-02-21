@@ -1,0 +1,61 @@
+GET _cat/indices
+
+PUT /cloplag_hi_ngram
+{
+    "index" : {
+        "analysis" : {
+            "analyzer" : {
+                "default" : {
+                    "type" : "whitespace"
+                }
+            }
+       }
+    }
+}
+
+#DELETE /cloplag_hi_ngram
+DELETE /cloplag_hi_dfr
+
+GET /cloplag_hi_dfr/_settings
+
+PUT cloplag_hi_dfr
+{ 
+  "settings": {
+    "similarity": {
+    "dfr_similarity" : {
+      "type": "DFR",
+      "basic_model": "g",
+      "after_effect": "l",
+      "normalization": "h2",
+      "normalization.h2.c": "3.0"
+    }
+  } ,
+  "mappings": { 
+    "doc":{ 
+      "properties": { 
+        "src": { 
+          "type": "string", 
+          "similarity": "dfr_similarity" 
+        } 
+      } 
+    } 
+  } , 
+  "index" : { 
+    "analysis" : { 
+      "analyzer" : { 
+        "default" : { 
+          "type" : "whitespace" 
+        } 
+      } 
+    } 
+  }
+  }
+}
+
+POST /cloplag_hi_ngram/src/_search?
+
+POST /cloplag_hi/src/_search?_source=false&explain=true
+{
+  "query": { "match": { "src": 
+  "W W * ; W W * ; W W ; W W * ; W W * ; W W * ; W W * ; W W W W W { W W W = W W ( ) ; W W W = W W ( ) ; W W W W ( W W , W W , W W , W W , W W ) { W W = ( W ) W ; W W = W W ( W , W , W , W ) ; W ( W ) ; W ( W ) ; W ( W ) ; W ( W ) ; } W W W ( W W ) { W W = ( W ) W ; W ( W ) ; W ( W ) ; W ( W ) ; W ( W , W , W , V , W ) ; } W W W W ( W W , W W , W W , W W , W W , W W ) { W W , W , W , W ; W ( W < W ) { W = W ; W = W ; } W { W = W ; W = W ; } W ( W < W ) { W = W ; W = W ; } W { W = W ; W = W ; } W ( ( W + V ) > = W & & ( W - V ) < = W & & ( W + V ) > = W & & ( W - V ) < = W ) { W V ; } W { W V ; } } W W W W ( W W , W W , W W , W W , W W , W W , W W , W W ) { W W , W ; W W = V ; W W = V ; W = W - W ; W = W - W ; W W = W / W ; W W = W - W * W ; W = W - W ; W = W - W ; W W = W / W ; W W = W - W * W ; W ( ( W - W ) = = V ) { W V ; } W { W = ( W - W ) / ( W - W ) ; W = W * W + W ; } W ( W ( W , W , W , W , W , W ) = = V & & W ( W , W , W , W , W , W ) = = V ) { W V ; } W { W V ; } } W W W W ( ) { W { W W = W W ( W ) ; W W = W W ( W ) ; W W ( W ( ) ) ; } W ( W W ) { W ( ) ; W V ; } } W W W W ( W W [ ] ) { W < W > W = W W < W > ( ) ; W ( W W = V ; W < V ; W + + ) { W ( S , W + V ) ; W ( W ( ) ) ; W ( S , W + V ) ; W ( W ( ) ) ; } W W = W W ( ) ; W ( W W = V ; W < W ( ) ; W + + ) { W W = W ( W + + ) ; W W = W ( W ) ; W ( W , W ) ; } W ( S ) ; W W = W ( ) ; W ( S ) ; W W = W ( ) ; W W = W + V ; W W = W ; W = W ; W = W ; W W = V ; W + = W ( W ( V ) , W ( V ) , W ( V ) , W ( V ) , W , W , W , W ) ; W + = W ( W ( V ) , W ( V ) , W ( V ) , W ( V ) , W , W , W , W ) ; W + = W ( W ( V ) , W ( V ) , W ( V ) , W ( V ) , W , W , W , W ) ; W ( ( W % V ) = = V ) { W ( S ) ; } W { W ( S ) ; } W ( W W ( ) { W W W ( W W ) { W ( V ) ; } } ) ; W ( V , V ) ; W ( W ) ; } }" 
+  } } }
