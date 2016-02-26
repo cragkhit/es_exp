@@ -1,5 +1,5 @@
 if [ "$#" -eq 0 ]; then
-        echo "Usage: ./run_all.sh <server name> <similarity> <input folder> <ES doc type>"
+        echo "Usage: ./run_all.sh <server name> <similarity> <input folder> <ES doc type> <index prefix>" 
         exit 1
 fi
 
@@ -8,7 +8,7 @@ index_name=`echo "$2" | awk '{print tolower($0)}'`
 # create all possible index combinations
 for i in "_hi" "_lo"; do
     for j in "_" "_ngram_"; do
-        final_index_name="cloplag$i$j$index_name"
+        final_index_name="$5$i$j$index_name"
         if [ $2 == "DFR" ] 
         then
 	    echo "Sim: $2"
@@ -31,7 +31,7 @@ for i in "_hi" "_lo"; do
             curl -XPUT $1:9200/$final_index_name -d '{ "settings": { "similarity": { "lmj_similarity" : { "type": "LMJelinekMercer", "lambda": "0.7" } } }, "mappings": {  "doc":{  "properties": {  "src": {  "type": "string",  "similarity": "lmd_similarity"  }  }  }  } ,  "index" : {  "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
         else
 	    echo "Sim: $2"
-            curl -XPUT $1:9200/$final_index_name -d '{ "mappings": { "doc": { "properties": { "src": { "type": "string", "similarity": "'"$2"'" } } } } , "index" : { "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
+            curl -XPUT $1:9200/$final_index_name -d '{ "index" : { "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
         fi
     done
 done
@@ -39,7 +39,7 @@ done
 # insert all the data in
 for i in "hi" "lo"; do
     for j in "_" "_ngram_"; do
-        final_index_name="cloplag_$i$j$index_name"
+        final_index_name="$5_$i$j$index_name"
         if [ $j == "_" ] 
         then 
             ngram="false"
