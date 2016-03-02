@@ -1,0 +1,19 @@
+<CloneClasses>
+	<CloneClass>
+	<ID>1</ID>
+		<Clone>
+			<Fragment>
+				<File>bubblesort/0_orig/BubbleSort.java</File>
+				<Start>3</Start>
+				<End>38</End>
+			</Fragment>
+		</Clone>
+		<Clone>
+			<Fragment>
+				<File>newbubblesort/0_orig/0_orig/BubbleSort.java</File>
+				<Start>3</Start>
+				<End>38</End>
+			</Fragment>
+		</Clone>
+	</CloneClass>
+</CloneClasses>
