@@ -9,6 +9,7 @@ index_name=`echo "$2" | awk '{print tolower($0)}'`
 for i in "_hi" "_lo"; do
     for j in "_" "_ngram_"; do
         final_index_name="$5$i$j$index_name"
+	curl -XDELETE $1:9200/$final_index_name
         if [ $2 == "DFR" ] 
         then
 	    echo "Sim: $2"

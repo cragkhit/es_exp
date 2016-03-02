@@ -1,6 +1,6 @@
 TOKENIZER="tools/java_tokenizer.jar"
 if [ "$#" -eq 0 ]; then
-	echo "Usage: ./read.sh <input dir> <index/type> <norm level (hi/lo/esc)> <n value of ngram> <ngram (true/false)>"
+	echo "Usage: ./read.sh <input dir> <index/type> <norm level (w/d/j/p/k/s/e)> <n value of ngram> <ngram (true/false)>"
 	exit 1
 fi
 for file in $1/*.java
