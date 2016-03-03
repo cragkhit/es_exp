@@ -43,23 +43,24 @@ for i in "wjk" "wkp" "wjkpd"; do
         final_index_name="$5_$i$j$index_name"
         if [ $j == "_" ] 
         then 
-            ngram="false"
-            ngram_flag=""
+        ngram="false"
+        ngram_flag=""
         else 
-            ngram="true"
-            ngram_flag="-n"
+        ngram="true"
+        ngram_flag="-n"
         fi
         #echo "./read.sh $3 "$final_index_name/$4" $i 4 $ngram"
         ./read.sh $3 "$final_index_name/$4" $i 4 $ngram
-        
+
         #mkdir $output
         #for k in "" "-f"; do
         # use only DFS mode for now
-            k="-f"
-            output=results_$2$k
-            mkdir $output
-            #echo "java -jar tools/checker.jar -s $1 -i $final_index_name -t src -d $3 -l $i $ngram_flag $k 1> $output/$final_index_name.csv"
-            java -jar tools/checker.jar -s $1 -i $final_index_name -t src -d $3 -l $i $ngram_flag $k 1> $output/$final_index_name.csv
+        k="-f"
+        output=results_$2$k
+        mkdir $output
+        #echo "java -jar tools/checker.jar -s $1 -i $final_index_name -t src -d $3 -l $i $ngram_flag $k 1> $output/$final_index_name.csv"
+        java -jar tools/checker.jar -s $1 -i $final_index_name -t src -d $3 -l $i $ngram_flag $k 1> $output/$final_index_name.csv
+        #curl -XDELETE $1:9200/$final_index_name
         #done
     done
 done
