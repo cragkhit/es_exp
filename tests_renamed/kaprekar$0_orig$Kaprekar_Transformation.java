@@ -16,9 +16,9 @@ class Kaprekar_Transformation {
         int a1, a2, a3;
         int d1, d2, d3;
         int big, small, diff;
-        int digit1 = number / 100;
+        int digit1 = number / 100; 
         int digit2 = ( number - digit1 * 100 ) / 10;
-        int digit3 = ( number % 10 );
+        int digit3 = ( number % 10 ); 
         if ( digit1 > digit2 ) {
             if ( digit1 > digit3 ) {
                 d1 = digit1;
@@ -93,9 +93,9 @@ class Kaprekar_Transformation {
         if ( number < 0 || number > 999 ) {
             System.out.println ( "Your input is not correct." );
         }
-        int digit1 = number / 100;
+        int digit1 = number / 100; 
         int digit2 = ( number - digit1 * 100 ) / 10;
-        int digit3 = ( number % 10 );
+        int digit3 = ( number % 10 ); 
         if ( digit1 == digit2 && digit1 == digit3 ) {
             System.out.println ( "All digits should not be equal." );
             return;

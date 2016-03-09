@@ -136,7 +136,8 @@ class GuessWord {
             System.out.println();
             System.out.println();
             if ( v21.length() >= 10 ) {
-                System.out.print ( "You have reached maximum amount of guesses." );
+                System.out
+                .print ( "You have reached maximum amount of guesses." );
                 v20 = false;
                 break;
             }
