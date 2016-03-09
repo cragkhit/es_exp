@@ -11,7 +11,7 @@ for i in "ll" "spl"; do
           curl -XDELETE $1:9200/$final_index_name
           curl -XPUT $1:9200/$final_index_name -d '{ "settings": { "similarity": { "ib_similarity" : { "type": "IB", "distribution": "'$i'", "lambda": "'$j'", "normalization": "'$k'"} } }, "mappings": {  "doc":{  "properties": {  "src": {  "type": "string",  "similarity": "ib_similarity"  }  }  }  } ,  "index" : {  "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
 
-          ./scripts/read.sh $2 "$final_index_name" "$3" $5 4 true
+          ./scripts/readbulk.sh $2 "$final_index_name" "$3" $5 4 true
 
           dfs="-f"
           output=best_param_ib
