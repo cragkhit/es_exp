@@ -14,7 +14,7 @@ for i in "no" "true" "false"; do
         curl -XPUT $1:9200/$final_index_name -d '{ "settings": { "similarity": { "tfidf_similarity" : { "type": "default", "discount_overlaps": "'$i'"} } }, "mappings": {  "doc":{  "properties": {  "src": {  "type": "string",  "similarity": "tfidf_similarity"  }  }  }  } ,  "index" : {  "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
     fi
 
-    ./scripts/read.sh $2 "$final_index_name/$3" $5 4 true
+    ./scripts/readbulk.sh $2 $final_index_name $3 $5 4 true
 
     dfs="-f"
     output=best_param_tfidf

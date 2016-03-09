@@ -11,7 +11,7 @@ for basic_model in "be" "d" "g" "if" "in" "ine" "p"; do
           curl -XDELETE $1:9200/$final_index_name
           curl -XPUT $1:9200/$final_index_name -d '{ "settings": { "similarity": { "dfr_similarity" : { "type": "DFR", "basic_model": "'$basic_model'", "after_effect": "'$after_effect'", "normalization": "'$normalization'", "normalization.h2.c": "3.0" } } }, "mappings": {  "doc":{  "properties": {  "src": {  "type": "string",  "similarity": "dfr_similarity"  }  }  }  } ,  "index" : {  "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
 
-          ./scripts/read.sh $2 "$final_index_name/$3" $5 4 true
+          ./scripts/readbulk.sh $2 "$final_index_name" "$3" $5 4 true
 
           dfs="-f"
           output=results_dfr

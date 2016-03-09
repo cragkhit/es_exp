@@ -12,7 +12,7 @@ for i in "0.0" "0.6" "1.2" "1.8" "2.4"; do
             final_index_name=$4"_"$k1"_"$b"_"$k
             curl -XDELETE $1:9200/$final_index_name
             curl -XPUT $1:9200/$final_index_name -d '{ "settings": { "similarity": { "bm25_similarity" : { "type": "BM25", "k1": "'$i'", "b": "'$j'", "discount_overlaps": "'$k'"} } }, "mappings": {  "doc":{  "properties": {  "src": {  "type": "string",  "similarity": "bm25_similarity"  }  }  }  } ,  "index" : {  "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
-            ./scripts/read.sh $2 "$final_index_name/$3" $5 4 true
+            ./scripts/readbulk.sh $2 "$final_index_name" "$3" $5 4 true
 
             dfs="-f"
             output=results_bm25
