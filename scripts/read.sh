@@ -3,12 +3,14 @@ if [ "$#" -eq 0 ]; then
 	echo "Usage: ./read.sh <input dir> <index/type> <norm level (w/d/j/p/k/s/e)> <n value of ngram> <ngram (true/false)>"
 	exit 1
 fi
-for file in $1/*.java
+for file in $1/**/*.java
 do
     #whatever you need with "$file"
-    id=`echo $file | sed -e "s:$1\/::" | sed -e 's/.java//'`
+    id=`basename $file | sed -e 's/.java//'`
+    #echo $id
     src=`java -jar "$TOKENIZER" -f $file -l $3 -v $4 -n $5`
-    printf $file
+    #echo "src="$src
+    printf $id", "
     #echo "curl -XPUT 'http://localhost:9200/$2/$id' -d '{ \"id\" : \"$id\", \"src\" : \"$src\"}'"
-    curl -XPUT "http://localhost:9200/$2/$id?pretty" -d "{ \"id\" : \"$id\", \"src\" : \"$src\"}"
+    curl -s -XPUT "http://localhost:9200/$2/$id?pretty" -d "{ \"id\" : \"$id\", \"src\" : \"$src\"}" > /dev/null
 done
