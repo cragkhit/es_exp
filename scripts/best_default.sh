@@ -1,5 +1,5 @@
 if [ "$#" -eq 0 ]; then
-        echo "Usage: ./run_all.sh <server name> <input folder> <ES doc type> <index prefix> <normalization>" 
+        echo "Usage: ./run_all.sh <server name> <input folder> <ES doc type> <index prefix> <normalization> <output folder>" 
         exit 1
 fi
 
@@ -17,7 +17,7 @@ for i in "no" "true" "false"; do
     ./scripts/readbulk.sh $2 $final_index_name $3 $5 4 true
 
     dfs="-f"
-    output=best_param_tfidf
+    output=$6
     mkdir $output
     #echo "java -jar tools/checker.jar -s $1 -i $final_index_name -t src -d $3 -l $i $ngram_flag $k 1> $output/$final_index_name.csv"
     java -jar tools/checker.jar -s $1 -i $final_index_name -t $3 -d $2 -l $5 $dfs -n 1> $output/$5ngram_$final_index_name.csv
