@@ -13,6 +13,7 @@ fi
 
 for file in $input/*.java
 do
+    #echo $file
     #whatever you need with "$file"
     id=`echo $file | sed -e "s:$input\/::" | sed -e 's/.java//'`
     src=`java -jar "$TOKENIZER" -f $file -l $norm -v $n -n $ngram`
