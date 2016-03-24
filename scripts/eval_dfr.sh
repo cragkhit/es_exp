@@ -2,7 +2,7 @@
 # This script creates DFR index with different parameter settings of basic_model, after_effect, and normalization
 
 if [ "$#" -eq 0 ]; then 
-        echo "Usage: ./best_bm25.sh <1. input folder> <2. index prefix> <3. size of n> <4. normalisation> <5. output folder> <6.basic_model> <7. after_effect> <8. normalization> <9. working dir>" 
+        echo "Usage: ./best_dfr.sh <1. input folder> <2. index prefix> <3. size of n> <4. normalisation> <5. output folder> <6.basic_model> <7. after_effect> <8. normalization> <9. working dir>" 
         exit 1
 fi
 

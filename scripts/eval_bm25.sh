@@ -2,7 +2,7 @@
 # This script creates DFR index with different parameter settings of basic_model, after_effect, and normalization
 
 if [ "$#" -eq 0 ]; then 
-        echo "Usage: ./best_bm25.sh <1. input folder> <2. index prefix> <3. size of n> <4. normalisation> <5. output folder> <6.basic_model> <7. after_effect> <8. normalization> <9. working dir>" 
+        echo "Usage: ./best_bm25.sh <1. input folder> <2. index prefix> <3. size of n> <4. normalisation> <5. output folder> <6.k1> <7. b> <8. discount_overlap> <9. working dir>" 
         exit 1
 fi
 
@@ -13,13 +13,14 @@ index=$2
 norm=$4
 n=$3
 output=$5
-basic_model=$6
-after_effect=$7
-normalization=$8
+k1v=$6
+bv=$7
+discount_overlap=$8
 HOME=$9
 
-
-final_index_name=$index"_"$basic_model"_"$after_effect"_"$normalization
+k1=`echo $k1v | sed -e s:\\\\.::`
+b=`echo $bv | sed -e s:\\\\.::` 
+final_index_name=$index"_"$k1"_"$b"_"$discount_overlap
 
 #echo "======================================================="
 #printf "HOST:\t\t\t$hostname\n"
@@ -30,7 +31,7 @@ final_index_name=$index"_"$basic_model"_"$after_effect"_"$normalization
 #echo "======================================================="
 
 #curl -s -XDELETE $hostname:9200/$final_index_name > /dev/null
-curl -s -XPUT $hostname:9200/$final_index_name -d '{ "settings": { "similarity": { "dfr_similarity" : { "type": "DFR", "basic_model": "'$basic_model'", "after_effect": "'$after_effect'", "normalization": "'$normalization'", "normalization.h2.c": "3.0" } } }, "mappings": {  "doc":{  "properties": {  "src": {  "type": "string",  "similarity": "dfr_similarity"  }  }  }  } ,  "index" : {  "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }' > /dev/null
+curl -s -XPUT $hostname:9200/$final_index_name -d '{ "settings": { "similarity": { "bm25_similarity" : { "type": "BM25", "k1": "'$k1'", "b": "'$b'", "discount_overlap": "'$discount_overlap'"} } }, "mappings": {  "doc":{  "properties": {  "src": {  "type": "string",  "similarity": "bm25_similarity"  }  }  }  } ,  "index" : {  "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
 
 cd $HOME
 ./scripts/read.sh localhost $input "$final_index_name/$doctype" $norm $n true > /dev/null
