@@ -29,15 +29,13 @@ echo "======================================================="
 curl -XDELETE $hostname:9200/$final_index_name
 curl -XPUT $hostname:9200/$final_index_name -d '{ "settings": { "similarity": { "dfr_similarity" : { "type": "DFR", "basic_model": "'$basic_model'", "after_effect": "'$after_effect'", "normalization": "'$normalization'", "normalization.h2.c": "3.0" } } }, "mappings": {  "doc":{  "properties": {  "src": {  "type": "string",  "similarity": "dfr_similarity"  }  }  }  } ,  "index" : {  "analysis" : { "analyzer" : { "default" : { "type" : "whitespace" } } } } }'
 
-#./scripts/read.sh $hostname $input "$final_index_name/$doctype" $norm $n true > /dev/null
+./scripts/read.sh $hostname $input "$final_index_name/$doctype" $norm $n true > /dev/null
 
 sleep 10
 
 # use DFS mode
 dfs="-f"
-java -jar tools/indexChecker.jar -s $hostname -i $final_index_name -t $doctype -d $input -l $norm $dfs -n -g $n # 1> $final_index_name.csv
-echo "java -jar tools/indexChecker.jar -s $hostname -i $final_index_name -t $doctype -d $input -l $norm $dfs -n -g $n"
-
+java -jar tools/checker_evo.jar -s $hostname -i $final_index_name -t $doctype -d $input -l $norm $dfs -n -g $n #1> $final_index_name.csv
 
 # clean up by delete the index
 curl -XDELETE $hostname:9200/$final_index_name
